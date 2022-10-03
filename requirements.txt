@@ -1,0 +1,9 @@
+selenium
+pytest
+pytest-selenium
+virtualenv
+Appium-Python-Client~=2.7.0
+altunityrunner==1.7.1
+assertpy
+pytest-html
+requests~=2.28.1
