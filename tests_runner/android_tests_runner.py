@@ -1,13 +1,13 @@
 import os
 import time
 from appium import webdriver
-from tests_runner.tests_runner import TestsRunnerBase
+from tests_runner.base.tests_runner import TestsRunnerBase
 
 
 class AndroidTestsRunner(TestsRunnerBase):
 
-    def isDeviceConnected(self, deviceNumber):
-        adbPath = self.argumentsReader.arguments.adb
+    def is_device_connected(self, deviceNumber):
+        adbPath = self.reader.arguments.adb
         arguments = "devices"
         print(f"Executing command: {adbPath} {arguments}")
 
@@ -34,18 +34,16 @@ class AndroidTestsRunner(TestsRunnerBase):
         deviceId = devices[deviceNumber - 1]
         return deviceId
 
-    def setupPortForwarding(self, deviceId, tcpLocalPort, tcpDevicePort):
+    def setup_port_forwarding(self, deviceId, tcpLocalPort, tcpDevicePort):
         pass
 
-    def runAppiumServer(self, hostPlatform):
+    def run_appium_server(self, hostPlatform):
         pass
 
-    def runAppiumSession(self, deviceId, buildPath, bundle):
-        desired_caps = {}
-        driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-
+    def run_appium_session(self, deviceId, buildPath, bundle):
+        driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_capabilities={})
         print("Appium driver started. Waiting a few seconds to go next.")
         time.sleep(5)
 
-    def stopAppiumSession(self):
+    def stop_appium_session(self):
         pass

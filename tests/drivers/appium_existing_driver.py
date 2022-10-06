@@ -22,19 +22,16 @@ class AppiumExistingDriver:
 
         print(f"Sessions request content: {content}")
 
+        appiumUrl = "http://localhost:4723/wd/hub"
         sessionsData = json.loads(content)
         firstSessionId = sessionsData["value"][0]["id"]
-        appiumUrl = "http://localhost:4723/wd/hub"
 
         self.webDriver = self.attach_to_session(appiumUrl, firstSessionId)
+        self.set_up_platform_fields(sessionsData)
 
-        # self.set_up_platform_fields()
-        self.isIosPlatform = True
-        self.isAndroidPlatform = False
-
-    def set_up_platform_fields(self):
+    def set_up_platform_fields(self, sessionsData):
         # platform is [Android / iOS]
-        self.platform = self.webDriver.capabilities['platformName']
+        self.platform = sessionsData["value"][0]["capabilities"]["platformName"]
         print(f"Appium platform: {self.platform}")
 
         self.isAndroidPlatform = self.platform == 'Android'

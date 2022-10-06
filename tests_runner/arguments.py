@@ -18,10 +18,10 @@ class ArgumentsReader:
         parser.add_argument("--port-device", "-pd", type=str, default="13000", help="connected device port to set up port forwarding. Values [13000, 13001, 13002,...n]")
 
         # Skipping some run steps
-        # parser.add_argument("--skip-port-forward", "-sp", type=bool, action=argparse.BooleanOptionalAction, help="skip port forwarding. Values [true/false]")
-        # parser.add_argument("--skip-server-run", "-ss", type=bool, action=argparse.BooleanOptionalAction, help="skip running (or opening if it's already ran) application on device. Values [true/false]")
-        # parser.add_argument("--skip-session-run", "-sr", type=bool, action=argparse.BooleanOptionalAction, help="skip installing and running application with initialization of appium session. Warning: tests that use appium API will not run. Values [true/false]")
-        # parser.add_argument("--skip-tests", "-st", type=bool, action=argparse.BooleanOptionalAction, help="skip running tests. Values [true/false]")
+        parser.add_argument("--skip-port-forward", "-sp", action='store_true', help="skip port forwarding. Values [true/false]")
+        parser.add_argument("--skip-server-run", "-ss", action='store_true', help="skip running (or opening if it's already ran) application on device. Values [true/false]")
+        parser.add_argument("--skip-session-run", "-sr", action='store_true', help="skip installing and running application with initialization of appium session. Warning: tests that use appium API will not run. Values [true/false]")
+        parser.add_argument("--skip-tests", "-st", action='store_true', help="skip running tests. Values [true/false]")
 
         # Android specific arguments
         parser.add_argument("--adb", type=str, default="adb", help="adb path. Value: string")

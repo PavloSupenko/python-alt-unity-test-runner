@@ -1,6 +1,5 @@
-selenium
-pytest
-pytest-selenium
+pytest==6.2.5
+pytest-selenium==4.0.0
 virtualenv
 Appium-Python-Client~=2.7.0
 altunityrunner==1.7.1
