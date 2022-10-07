@@ -1,10 +1,9 @@
 import unittest
-from abc import ABC, abstractmethod
 from altunityrunner import AltUnityDriver
 from tests.drivers.appium_existing_driver import AppiumExistingDriver
 
 
-class AltUnityBaseTest(unittest.TestCase, ABC):
+class AltUnityBaseTest(unittest.TestCase):
 
     def setUp(self):
         appiumExistingDriver = AppiumExistingDriver()
@@ -16,11 +15,3 @@ class AltUnityBaseTest(unittest.TestCase, ABC):
 
     def tearDown(self):
         self.altUnityDriver.stop()
-
-    @abstractmethod
-    def test_enter(self):
-        ...
-
-    @abstractmethod
-    def test_exit(self):
-        ...
