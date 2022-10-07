@@ -14,4 +14,4 @@ class TestSystemDialogsSkip(AppiumBaseTest):
         firebaseWarningSkipButton.click()
 
     def test_exit(self):
-        assert True
+        pass

@@ -15,7 +15,7 @@ class TestPrivacyPolicySkip(AltUnityBaseTest):
         print("Tap on policy accept button")
         acceptButton.tap()
 
-        time.sleep(2)
+        time.sleep(3)
 
     def test_exit(self):
         if self.isIosPlatform:
