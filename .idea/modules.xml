@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/python-alt-unity-tests-runner.iml" filepath="$PROJECT_DIR$/.idea/python-alt-unity-tests-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/python-alt-unity-test-runner.iml" filepath="$PROJECT_DIR$/.idea/python-alt-unity-test-runner.iml" />
     </modules>
   </component>
 </project>
