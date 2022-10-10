@@ -16,7 +16,8 @@ androidTestsRunner.run_appium_session("", "", "")
 tests = [
     "system_dialogs_skip_test.py",
     "privacy_policy_skip_test.py",
-    "questionnaire_skip_test.py"
+    "questionnaire_skip_test.py",
+    "purchase_menu_open_test.py"
 ]
 
 for testName in tests:
