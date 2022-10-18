@@ -1,9 +1,11 @@
 import os
 import time
 import platform
+from pprint import pprint
 import pytest
 from tests_runner.arguments import ArgumentsReader
 from tests_runner.android_tests_runner import AndroidTestsRunner
+from tests_runner.tests_order_tree_builder import TestsOrderTreeBuilder
 
 argumentsReader = ArgumentsReader()
 androidTestsRunner = AndroidTestsRunner(argumentsReader)
@@ -13,32 +15,22 @@ print(f"platform.system: {platform.system()}")
 print(f"platform.release: {platform.release()}")
 
 androidTestsRunner.run_appium_session("", "", "")
-testsOrderFile = open("tests.txt", "r")
-testNames = testsOrderFile.read().split('\n')
 
-print('Test names found:')
-testNumber = 1
-for testName in testNames:
-    print(f"{testNumber}.{testName}")
-    testNumber += 1
-
+tests = TestsOrderTreeBuilder('tests.yml').get_tests_order()
+pprint(tests)
 
 generalArtifactsDirectory = os.environ['DEVICEFARM_LOG_DIR']
 testLogsDirectory = os.path.join(generalArtifactsDirectory, "Logs")
 
-for testName in testNames:
-    currentTestLogDirectory = os.path.join(testLogsDirectory, testName)
-    currentEnterTestLogPath = os.path.join(currentTestLogDirectory, "enter.xml")
-    currentExitTestLogPath = os.path.join(currentTestLogDirectory, "exit.xml")
+for test in tests:
+    testName = test.split('::')[0]
+    testMethod = test.split('::')[1]
 
-    enterArgsString = f"tests/{testName}.py -k enter -s --junit-xml {currentEnterTestLogPath}"
+    currentTestLogPath = os.path.join(testLogsDirectory, testName, testMethod + '.xml')
+
+    enterArgsString = f"tests/{testName}.py -k {testMethod} -s --junit-xml {currentTestLogPath}"
     enterArgs = enterArgsString.split(" ")
     enterRetCode = pytest.main(enterArgs)
-    print(f"Return code for: {testName}.enter is: {enterRetCode}")
+    print(f"Return code for: {testName}.{testMethod} is: {enterRetCode}")
 
     time.sleep(2)
-
-    exitArgsString = f"tests/{testName}.py -k exit -s --junit-xml {currentExitTestLogPath}"
-    exitArgs = exitArgsString.split(" ")
-    exitRetCode = pytest.main(exitArgs)
-    print(f"Return code for: {testName}.exit is: {exitRetCode}")
