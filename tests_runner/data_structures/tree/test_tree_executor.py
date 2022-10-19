@@ -37,9 +37,11 @@ class TestTreeExecutor:
         return return_code == 0
 
     def __execute_pytest(self, test_class_name, test_method_name):
-        test_log_path = os.path.join(self._artifacts_directory, 'tests', f"{self._current_test_number}", f"{test_class_name}.{test_method_name}.xml")
+        test_directory_name = f"{self._current_test_number}.{str(test_class_name).replace('/', '_')}.{test_method_name}"
+        test_artifacts_path = os.path.join(self._artifacts_directory, 'tests', test_directory_name)
+        test_log_path = os.path.join(test_artifacts_path, 'pytest_log.xml')
 
-        os.environ["CUSTOM_TEST_NUMBER"] = f"{self._current_test_number}"
+        os.environ["CUSTOM_CURRENT_TEST_DIR"] = test_artifacts_path
         args_string = f"tests/{test_class_name}.py -k {test_method_name} -s --junit-xml {test_log_path}"
         args = args_string.split(" ")
         return_code = pytest.main(args)
