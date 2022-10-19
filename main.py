@@ -15,8 +15,7 @@ print(f"platform.release: {platform.release()}")
 androidTestsRunner.run_appium_session("", "", "")
 
 testTree = TestTreeBuilder('tests.yml').build()
-generalArtifactsDirectory = os.environ['DEVICEFARM_LOG_DIR']
-testLogsDirectory = os.path.join(generalArtifactsDirectory, "Logs")
+artifactsDirectory = os.environ['DEVICEFARM_LOG_DIR']
 
-testTreeExecutor = TestTreeExecutor(testTree, testLogsDirectory)
+testTreeExecutor = TestTreeExecutor(testTree, artifactsDirectory)
 testTreeExecutor.execute()

@@ -5,13 +5,14 @@ from tests_runner.data_structures.tree.test_tree import TestTree
 
 
 class TestTreeExecutor:
-    def __init__(self, test_tree: TestTree, logs_directory: str):
+    def __init__(self, test_tree: TestTree, artifacts_directory: str):
         self._root = test_tree
-        self._logs_directory = logs_directory
+        self._artifacts_directory = artifacts_directory
         self._enter_test_method_name = 'test_enter'
         self._exit_test_method_name = 'test_exit'
 
     def execute(self):
+        self._current_test_number = 1
         self.__execute_test_node(self._root)
 
     def __execute_test_node(self, node: TestTree):
@@ -36,13 +37,15 @@ class TestTreeExecutor:
         return return_code == 0
 
     def __execute_pytest(self, test_class_name, test_method_name):
-        currentTestLogPath = os.path.join(self._logs_directory, test_class_name, test_method_name + '.xml')
+        test_log_path = os.path.join(self._artifacts_directory, 'tests', f"{self._current_test_number}", f"{test_class_name}.{test_method_name}.xml")
 
-        args_string = f"tests/{test_class_name}.py -k {test_method_name} -s --junit-xml {currentTestLogPath}"
+        os.environ["CUSTOM_TEST_NUMBER"] = f"{self._current_test_number}"
+        args_string = f"tests/{test_class_name}.py -k {test_method_name} -s --junit-xml {test_log_path}"
         args = args_string.split(" ")
         return_code = pytest.main(args)
 
         # Simple waiting between tests. May be redundant and deleted in future
         time.sleep(2)
 
+        self._current_test_number += 1
         return return_code
