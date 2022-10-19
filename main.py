@@ -4,6 +4,7 @@ from tests_runner.android_tests_runner import AndroidTestsRunner
 from tests_runner.arguments import ArgumentsReader
 from tests_runner.data_structures.tree.test_tree_builder import TestTreeBuilder
 from tests_runner.data_structures.tree.test_tree_executor import TestTreeExecutor
+from tests_runner.report_builder import ReportBuilder
 
 argumentsReader = ArgumentsReader()
 androidTestsRunner = AndroidTestsRunner(argumentsReader)
@@ -18,4 +19,6 @@ testTree = TestTreeBuilder('tests.yml').build()
 artifactsDirectory = os.environ['DEVICEFARM_LOG_DIR']
 
 testTreeExecutor = TestTreeExecutor(testTree, artifactsDirectory)
-testTreeExecutor.execute()
+testRenderResults = testTreeExecutor.execute_tree()
+
+reportBuilder = ReportBuilder(testRenderResults, artifactsDirectory).create_report()

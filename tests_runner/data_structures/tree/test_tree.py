@@ -8,3 +8,4 @@ class TestTree:
 
     def has_children(self):
         return len(self.children) > 0
+
