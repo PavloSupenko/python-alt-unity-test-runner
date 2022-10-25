@@ -19,15 +19,15 @@ class ReportBuilder:
             style(
                 """\
                         .collapsible {
-                            background-color: rgb(200, 200, 200);
+                            background-color: rgb(255, 255, 255);
                             color: white;
                             cursor: pointer;
-                            padding: 3px;
+                            padding: 0px;
                             width: 100%;
                             border: none;
                             text-align: left;
                             outline: none;
-                            font-size: 14px;
+                            font-size: 18px;
                          }
                          
                         .failed {
@@ -39,11 +39,11 @@ class ReportBuilder:
                         }
 
                         .active, .collapsible:hover {
-                            background-color: rgb(150, 150, 150);
+                            background-color: rgb(255, 255, 255);
                         } 
 
                         .content {
-                            padding: 0 3px;
+                            padding: 0 0px;
                             display: none;
                             overflow: hidden;
                             background-color: #f1f1f1;
@@ -54,28 +54,38 @@ class ReportBuilder:
         with doc:
             h2("Report")
             for test_result in self._tests_results:
-                with button(type="button", class_="collapsible", style=f"padding-left: {test_result.nesting_level * self._padding_multiplier}px"):
+                test_padding = test_result.nesting_level * self._padding_multiplier
+                data_padding = test_padding + 10
+
+                with button(type="button", class_="collapsible", style=f"padding-left: {test_padding}px"):
                     if test_result.success:
-                        with div(class_="passed"):
-                            div(f"∟{test_result.name}")
+                        div(class_="passed").add(f"∟{test_result.name}")
                     else:
-                        with div(class_="failed"):
-                            div(f"∟{test_result.name}")
+                        div(class_="failed").add(f"∟{test_result.name}")
 
                 with div(class_="content"):
                     test_global_artifacts_path = test_result.artifacts_path
                     general_artifacts_path = self._artifacts_directory
                     test_local_artifacts_path = os.path.relpath(test_global_artifacts_path, general_artifacts_path)
 
-                    for file_name in os.listdir(test_global_artifacts_path):
+                    artifacts = os.listdir(test_global_artifacts_path)
+                    artifacts.sort(key=lambda f: os.path.splitext(f)[1])
+
+                    for file_name in artifacts:
                         file_path = os.path.join(test_global_artifacts_path, file_name)
                         file_local_path = os.path.join(test_local_artifacts_path, file_name)
                         # checking if it is a file and screenshot
-                        if os.path.isfile(file_path) and '.png' in file_name:
-                            with button(type="button", class_="collapsible"):
-                                div(file_name)
-                            with div(class_="content"):
+                        if not os.path.isfile(file_path):
+                            continue
+
+                        with button(type="button", class_="collapsible", style=f"padding-left: {data_padding}px"):
+                            div(style="background-color: rgb(211, 149, 35);").add(file_name)
+
+                        with div(class_="content"):
+                            if '.png' in file_name:
                                 img(style="max-width: 500px; height: auto; ", src=f"{file_local_path}")
+                            else:
+                                a(href=file_local_path, target="_blank", rel="noopener noreferrer").add("show log...")
 
             script(
                 '''\
