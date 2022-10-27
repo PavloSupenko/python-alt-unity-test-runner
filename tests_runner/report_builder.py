@@ -46,7 +46,7 @@ class ReportBuilder:
                             padding: 0 0px;
                             display: none;
                             overflow: hidden;
-                            background-color: #f1f1f1;
+                            background-color: white;
                         }
                      """
             )
@@ -83,9 +83,9 @@ class ReportBuilder:
 
                         with div(class_="content"):
                             if '.png' in file_name:
-                                img(style="max-width: 500px; height: auto; ", src=f"{file_local_path}")
+                                img(style=f"max-width: 500px; height: auto; padding-left: {data_padding}px;", src=f"{file_local_path}")
                             else:
-                                a(href=file_local_path, target="_blank", rel="noopener noreferrer").add("show log...")
+                                a(href=file_local_path, target="_blank", rel="noopener noreferrer", style=f"padding-left: {data_padding}px",).add("show log...")
 
             script(
                 '''\
