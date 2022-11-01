@@ -69,7 +69,8 @@ class ReportBuilder:
                     test_local_artifacts_path = os.path.relpath(test_global_artifacts_path, general_artifacts_path)
 
                     artifacts = os.listdir(test_global_artifacts_path)
-                    artifacts.sort(key=lambda f: os.path.splitext(f)[1])
+                    # Sort artifacts firstly by extension and then by file path
+                    artifacts.sort(key=lambda f: f"{os.path.splitext(f)[1]}.{os.path.splitext(f)[0]}")
 
                     for file_name in artifacts:
                         file_path = os.path.join(test_global_artifacts_path, file_name)
