@@ -84,7 +84,7 @@ class ReportBuilder:
 
                         with div(class_="content"):
                             if '.png' in file_name:
-                                img(style=f"max-width: 500px; height: auto; padding-left: {data_padding}px;", src=f"{file_local_path}")
+                                img(style=f"max-width: 500px; max-height: 500px; height: auto; padding-left: {data_padding}px;", src=f"{file_local_path}")
                             else:
                                 a(href=file_local_path, target="_blank", rel="noopener noreferrer", style=f"padding-left: {data_padding}px",).add("show log...")
 
