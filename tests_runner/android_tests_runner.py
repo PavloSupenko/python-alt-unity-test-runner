@@ -41,7 +41,7 @@ class AndroidTestsRunner(TestsRunnerBase):
         pass
 
     def run_appium_session(self, deviceId, buildPath, bundle):
-        appium_port_number = int(os.environ["CUSTOM_CURRENT_TEST_DIR"])
+        appium_port_number = int(os.environ["APPIUM_PORT"])
         driver = webdriver.Remote(f"http://localhost:{appium_port_number}/wd/hub", desired_capabilities={})
         print("Appium driver started. Waiting a few seconds to go next.")
         time.sleep(5)
