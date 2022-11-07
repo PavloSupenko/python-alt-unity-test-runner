@@ -2,7 +2,7 @@ import os
 import time
 import pytest
 from tests_runner.data_structures.tree.test_tree import TestTree
-from tests_runner.test_result_info import TestResultInfo
+from tests_runner.data_structures.test_result_info import TestResultInfo
 
 
 class TestTreeExecutor:

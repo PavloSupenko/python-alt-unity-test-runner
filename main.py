@@ -1,24 +1,23 @@
 import os
 import platform
-from tests_runner.android_tests_runner import AndroidTestsRunner
-from tests_runner.arguments import ArgumentsReader
+from tests_runner.report_builder import ReportBuilder
+from tests_runner.session_runner import SessionRunner
 from tests_runner.data_structures.tree.test_tree_builder import TestTreeBuilder
 from tests_runner.data_structures.tree.test_tree_executor import TestTreeExecutor
-from tests_runner.report_builder import ReportBuilder
 
-argumentsReader = ArgumentsReader()
-androidTestsRunner = AndroidTestsRunner(argumentsReader)
 
 print(f"os.name: {os.name}")
 print(f"platform.system: {platform.system()}")
 print(f"platform.release: {platform.release()}")
 
-androidTestsRunner.run_appium_session("", "", "")
+appium_port_number = int(os.environ["APPIUM_PORT"])
+artifacts_directory = os.environ['DEVICEFARM_LOG_DIR']
 
-testTree = TestTreeBuilder('tests.yml').build()
-artifactsDirectory = os.environ['DEVICEFARM_LOG_DIR']
+session_runner = SessionRunner(appium_port_number)
+session_runner.run_appium_session()
 
-testTreeExecutor = TestTreeExecutor(testTree, artifactsDirectory)
-testRenderResults = testTreeExecutor.execute_tree()
+test_tree = TestTreeBuilder('tests.yml').build()
+test_tree_executor = TestTreeExecutor(test_tree, artifacts_directory)
+test_render_results = test_tree_executor.execute_tree()
 
-reportBuilder = ReportBuilder(testRenderResults, artifactsDirectory).create_report()
+report_builder = ReportBuilder(test_render_results, artifacts_directory).create_report()

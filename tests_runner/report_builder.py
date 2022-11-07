@@ -2,7 +2,7 @@ import os.path
 from typing import List
 import dominate
 from dominate.tags import *
-from tests_runner.test_result_info import TestResultInfo
+from tests_runner.data_structures.test_result_info import TestResultInfo
 
 
 class ReportBuilder:
