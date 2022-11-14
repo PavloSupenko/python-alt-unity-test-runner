@@ -41,7 +41,7 @@ class TestTreeExecutor:
         test_directory_name = f"{self._current_test_number}.{str(test_class_name).replace('/', '_')}.{method_name}"
         test_artifacts_path = os.path.join(self._artifacts_directory, 'tests', test_directory_name)
         current_time = datetime.now().strftime("%H-%M-%S")
-        test_log_file_name = f"[{current_time}]_pytest_log.xml"
+        test_log_file_name = f"[{current_time}] pytest_log.xml"
         test_log_path = os.path.join(test_artifacts_path, test_log_file_name)
 
         print(f"Executing test: {test_class_name}. Artifacts directory: {test_artifacts_path}")
