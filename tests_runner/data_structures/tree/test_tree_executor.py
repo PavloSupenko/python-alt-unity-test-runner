@@ -1,5 +1,7 @@
 import os
 import time
+from datetime import datetime
+
 import pytest
 from tests_runner.data_structures.tree.test_tree import TestTree
 from tests_runner.data_structures.test_result_info import TestResultInfo
@@ -38,7 +40,9 @@ class TestTreeExecutor:
         test_class_name = node.test_name
         test_directory_name = f"{self._current_test_number}.{str(test_class_name).replace('/', '_')}.{method_name}"
         test_artifacts_path = os.path.join(self._artifacts_directory, 'tests', test_directory_name)
-        test_log_path = os.path.join(test_artifacts_path, 'pytest_log.xml')
+        current_time = datetime.now().strftime("%H-%M-%S")
+        test_log_file_name = f"[{current_time}] pytest_log.xml"
+        test_log_path = os.path.join(test_artifacts_path, test_log_file_name)
 
         print(f"Executing test: {test_class_name}. Artifacts directory: {test_artifacts_path}")
 
