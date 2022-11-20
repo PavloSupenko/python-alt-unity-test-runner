@@ -2,12 +2,10 @@ import os.path
 from typing import List
 import dominate
 from dominate.tags import *
-from tests_runner.data_structures.test_result_info import TestResultInfo
 
 
 class ReportBuilder:
-    def __init__(self, tests_results: List[TestResultInfo], artifacts_directory: str):
-        self._tests_results = tests_results
+    def __init__(self, artifacts_directory: str):
         self._artifacts_directory = artifacts_directory
         self._padding_multiplier = 20
 
